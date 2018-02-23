@@ -1,4 +1,4 @@
-[![AppIns' BEKIT](https://imgur.com/LWHhi5F.png)](https://github.com/appins)
+[![AppIns' BEKIT](https://imgur.com/zfCL7nD.png)](https://github.com/appins)
 
 ## A tool for creating web servers with ease.
 BEKIT stands for Backend Kit.
