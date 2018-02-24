@@ -33,5 +33,4 @@ on using it.
 
 You can reroute specific files easily. If a user wants to access a file called
 `contact.html`, you can reroute them to `about-us.html` by administrating the
-command `filerr contact.html->about-us.html`. If the rerouted file starts with
-a `/`, it will interpret it as a file somewhere else on your hard drive.
+command `filerr contact.html->about-us.html`. 

@@ -9,6 +9,8 @@ import (
 func run(block []string, port int) {
   mainFolder := ""
   var filerr map[string]string
+  filerr = make(map[string]string)
+  reportIp := false
 
   for line, comm := range(block) {
     args := strings.Split(comm, " ")
@@ -39,6 +41,21 @@ func run(block []string, port int) {
 
       mainFolder = argument
       break
+    case "filerr":
+      if len(args) == 1 {
+        errReport("filerr needs an argument.", line)
+        return
+      }
+
+      argument := strings.Join(args[1:len(args)], " ")
+      files := strings.Split(argument, "->")
+
+      if len(files) != 2 {
+        errReport("filerr only takes 2 files separated by a '->'", line)
+        return
+      }
+
+      filerr[files[0]] = files[1]
 
     default:
       errReport("command not found.", line)
@@ -46,5 +63,5 @@ func run(block []string, port int) {
     }
   }
 
-  startWebserver(port, mainFolder, filerr)
+  startWebserver(port, mainFolder, filerr, reportIp)
 }
