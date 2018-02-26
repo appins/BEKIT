@@ -1,4 +1,4 @@
-[![AppIns' BEKIT](https://imgur.com/zfCL7nD.png)](https://github.com/appins)
+[![#AppIns' BEKIT](https://imgur.com/zfCL7nD.png)](https://github.com/appins)
 
 ## A tool for creating web servers with ease.
 BEKIT stands for Backend Kit.
@@ -15,7 +15,7 @@ Let's get started! Just open a terminal and type:
 
 ### Alpha Notice:
 Each update will add or change existing features. I can not
-ensure that an update will not break your code.
+ensure that an update will not break your code (for now).
 
 ### How To Use
 To start using Bekit, you must first know what port you want
@@ -36,6 +36,14 @@ To set up the `main` folder, just type `main /path/to/folder`. This
 folder must contain a file called index.html, even if you don't plan
 on using it.
 
+The bare minimum for a BEKIT server is a port and a main folder,
+a server like that would look something like
+```
+onport 80
+main /path/to/folder
+end
+```
+
 You can reroute specific files easily. If a user wants to access a file called
 `contact.html`, you can reroute them to `about-us.html` by administrating the
 command `filerr contact.html->about-us.html`. You can also disable access
@@ -45,6 +53,13 @@ to a file by rerouting it to `null`, such as
 The `logip` command will log IP's of users who request files that
 do not exist. This is useful to see who may be trying to maliciously
 request files.
+
+The `force` command will ignore most errors and run. This should be put
+at the very top of your code. Even with the force command, you still
+need to define a main folder. The `force-lite` command will only ignore
+small errors such as commands not being recognized. These commands
+have opportunities to cause MAJORS issues if the command has incorrect
+syntax. Don't use either except for quick testing.
 
 Commands will continue to be added until the release stage. The current
 stage is: `alpha`.

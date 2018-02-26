@@ -2,6 +2,7 @@
 package main
 
 import (
+  "fmt"
   "strings"
 )
 
@@ -11,6 +12,8 @@ func run(block []string, port int) {
   var filerr map[string]string
   filerr = make(map[string]string)
   reportIp := false
+  ignoreFakes := false
+  ignoreErrors := false
 
   for line, comm := range(block) {
     args := strings.Split(comm, " ")
@@ -24,7 +27,10 @@ func run(block []string, port int) {
     case "root":
       if len(args) == 1 {
         errReport("main folder was not stated.", line)
-        return
+        if !ignoreErrors {
+          return
+        }
+        break
       }
 
       argument := strings.Join(args[1:len(args)], " ")
@@ -32,11 +38,17 @@ func run(block []string, port int) {
       // Make sure file exists (and contains index.html)
       if !fileOrFolderExists(argument) {
         errReport("the main folder that was specified does not exist.", line)
-        return
+        if !ignoreErrors {
+          return
+        }
+        break
       }
       if !fileOrFolderExists(argument + "/index.html") {
         errReport("main folder must contain 'index.html' to run.", line)
-        return
+        if !ignoreErrors {
+          return
+        }
+        break
       }
 
       mainFolder = argument
@@ -46,7 +58,10 @@ func run(block []string, port int) {
     case "rrfile":
       if len(args) == 1 {
         errReport("filerr needs an argument.", line)
-        return
+        if !ignoreErrors {
+          return
+        }
+        break
       }
 
       argument := strings.Join(args[1:len(args)], " ")
@@ -54,7 +69,10 @@ func run(block []string, port int) {
 
       if len(files) != 2 {
         errReport("filerr only takes 2 files separated by a '->'", line)
-        return
+        if !ignoreErrors {
+          return
+        }
+        break
       }
 
       filerr[files[0]] = files[1]
@@ -64,10 +82,25 @@ func run(block []string, port int) {
     case "logip":
       reportIp = true
       break
+    case "force":
+      ignoreErrors = true
+      ignoreFakes = true
+      fmt.Println("Ignoring errors and commands that do not exist")
+    case "force-lite":
+      ignoreFakes = true
+      fmt.Println("Ignoring commands that do not exist")
+    // If the command is not found, report it as an error, unless `force` or `force-lite`
     default:
       errReport("command not found.", line)
-      return
+      if !ignoreFakes {
+        return
+      }
     }
+  }
+
+  if mainFolder == "" {
+    fmt.Println("You must set a main folder to run your server!")
+    return
   }
 
   startWebserver(port, mainFolder, filerr, reportIp)
