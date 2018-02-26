@@ -26,6 +26,15 @@ func startWebserver(port int, mainfolder string, filerr map[string]string,
 
     for filename, reroute := range(filerr) {
       if filename == path || "/" + filename == path {
+        if reroute == "null" {
+          http.NotFound(w, r)
+          fmt.Println("A user requested " + path + " which was rerouted to null")
+          if reportIp {
+            ip, _, _ := net.SplitHostPort(r.RemoteAddr)
+            fmt.Println("The ip for that request is: " + ip )
+          }
+          return
+        }
         path = reroute
         break
       }
@@ -39,7 +48,7 @@ func startWebserver(port int, mainfolder string, filerr map[string]string,
       fmt.Println("User requested missing file (" + path + ")")
       if reportIp {
         ip, _, _ := net.SplitHostPort(r.RemoteAddr)
-        fmt.Println("The ip for the request is: " + ip )
+        fmt.Println("The ip for that request is: " + ip )
       }
 
       http.NotFound(w, r)

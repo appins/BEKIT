@@ -42,6 +42,8 @@ func run(block []string, port int) {
       mainFolder = argument
       break
     case "filerr":
+      fallthrough
+    case "rrfile":
       if len(args) == 1 {
         errReport("filerr needs an argument.", line)
         return
@@ -56,7 +58,12 @@ func run(block []string, port int) {
       }
 
       filerr[files[0]] = files[1]
-
+      break
+    case "log-ip":
+      fallthrough
+    case "logip":
+      reportIp = true
+      break
     default:
       errReport("command not found.", line)
       return
