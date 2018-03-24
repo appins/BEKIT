@@ -52,10 +52,18 @@ command `filerr contact.html->about-us.html`. You can also disable access
 to a file by rerouting it to `null`, such as
 `filerr contact.html->null`.
 
+
+#### Example Usage
+The following will take all requests to main.html and reroute them to index.html
+```
+filerr main.html->index.html
+```
+
+
 ## `logip`
 The `logip` command will log IP's of users who request files that
 do not exist. This is useful to see who may be trying to maliciously
-request files.
+request files or overload the server.
 
 ## `force` and `force-lite`
 The `force` command will ignore most errors and run. This should be put
@@ -63,7 +71,7 @@ at the very top of your code. Even with the force command, you still
 need to define a main folder. The `force-lite` command will only ignore
 small errors such as commands not being recognized. These commands
 have opportunities to cause MAJORS issues if the command has incorrect
-syntax. Don't use either except for quick testing.
+syntax. Don't use either except for testing.
 
 ## `f`
 The `f` command is experimental and incomplete. It takes data from the
@@ -86,7 +94,7 @@ The following keywords are available as outputs
   * `console` (takes `:nonewline` as a possible method)
   * `write` (which takes a filename as a method, newlines will have to be added using `text`)
 
-#### Example usage
+#### Example Usage
 The following code will write users requests, such as "/index.html x.x.x.x" to the console
 ```
 f request:file->console:nonewline
