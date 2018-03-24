@@ -50,10 +50,5 @@ func main() {
 
     blocks[len(blocks) - 1] = addToBlock(blocks[len(blocks) - 1], inp)
 
-
   }
-
-
-
-
 }

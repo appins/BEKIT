@@ -11,6 +11,8 @@ func run(block []string, port int) {
   mainFolder := ""
   var filerr map[string]string
   filerr = make(map[string]string)
+  var f_in []string
+  var f_out []string
   reportIp := false
   ignoreFakes := false
   ignoreErrors := false
@@ -89,6 +91,21 @@ func run(block []string, port int) {
     case "force-lite":
       ignoreFakes = true
       fmt.Println("Ignoring commands that do not exist")
+    case "f":
+      argument := strings.Join(args[1:len(args)], " ")
+      pieces := strings.Split(argument, "->")
+
+      if len(pieces) != 2 {
+        errReport("f takes one input and one output seperated by a '->'", line)
+        if !ignoreErrors {
+          return
+        }
+        break
+      }
+
+      f_in = append(f_in, pieces[0])
+      f_out = append(f_out, pieces[1])
+
     // If the command is not found, report it as an error, unless `force` or `force-lite`
     default:
       errReport("command not found.", line)
@@ -103,5 +120,5 @@ func run(block []string, port int) {
     return
   }
 
-  startWebserver(port, mainFolder, filerr, reportIp)
+  startWebserver(port, mainFolder, filerr, reportIp, f_in, f_out)
 }
