@@ -8,7 +8,7 @@ import (
 )
 
 func version() string {
-  return "0.0.1 ALPHA"
+  return "0.1.1 ALPHA"
 }
 
 func readInput() (string, error) {
@@ -23,8 +23,8 @@ func readInput() (string, error) {
 
 // Check if a file exists
 func fileOrFolderExists(filename string) bool {
-  if _, err := os.Stat(filename)
-  err == nil {
+  _, err := os.Stat(filename)
+  if err == nil {
     return true
   }
   return false

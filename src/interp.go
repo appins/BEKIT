@@ -3,11 +3,14 @@ package main
 
 import (
   "fmt"
+  "io/ioutil"
+  "os"
+  "strconv"
   "strings"
 )
 
 // Run a block of code on a certain port
-func run(block []string, port int) {
+func run(block []string, port string, mode string, filename string) {
   mainFolder := ""
   var filerr map[string]string
   filerr = make(map[string]string)
@@ -19,7 +22,15 @@ func run(block []string, port int) {
 
   for line, comm := range(block) {
     args := strings.Split(comm, " ")
+
+    // Loading from a file shifts all data down
+    if mode == "load" {
+      line++
+    }
+
     switch args[0] {
+    case "":
+    case " ":
 
     // Set up the main, or root, folder for the project (must exist)
     case "set-main":
@@ -120,5 +131,47 @@ func run(block []string, port int) {
     return
   }
 
-  startWebserver(port, mainFolder, filerr, reportIp, f_in, f_out)
+  // Handle all three modes
+  if mode == "onport" || mode == "load" {
+    startWebserver(port, mainFolder, filerr, reportIp, f_in, f_out)
+  }
+  if mode == "save" {
+    fildat := "port " + port + "\n"
+    fildat += strings.Join(block, "\n")
+
+    f, err1 := os.OpenFile(filename, os.O_WRONLY, 0644)
+    defer f.Close()
+    _, err2 := f.WriteString(fildat)
+
+    if err1 != nil || err2 != nil {
+      panic(err1)
+      panic(err2)
+    }
+  }
+
+}
+
+// Load a file, then pass it into the interpreter
+func loadFile(filename string) {
+  if !fileOrFolderExists(filename) {
+    fmt.Println("File does not exist!")
+    return
+  }
+
+  dat, err := ioutil.ReadFile(filename)
+  if err != nil {
+    panic(err)
+  }
+
+  block := strings.Split(string(dat), "\n")
+  // Check if the port is still valid
+  port := strings.Split(block[0], " ")
+  _, err = strconv.Atoi(port[1])
+  if err != nil || port[0] != "port" || len(port) > 2 {
+    fmt.Println("Loaded file's port config is incorrect!")
+    return
+  }
+
+  run(block[1:len(block)], port[1], "load", "")
+
 }

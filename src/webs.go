@@ -7,12 +7,11 @@ import (
   "net"
   "net/http"
   "os"
-  "strconv"
   "strings"
 )
 
 // Used for starting the actual web server
-func startWebserver(port int, mainfolder string, filerr map[string]string,
+func startWebserver(port string, mainfolder string, filerr map[string]string,
   reportIp bool, f_in []string, f_out []string) {
   http.HandleFunc("/", func (w http.ResponseWriter, r *http.Request) {
     defer r.Body.Close()
@@ -112,6 +111,7 @@ func startWebserver(port int, mainfolder string, filerr map[string]string,
               }
             }
             f, err1 := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY, 0644)
+            defer f.Close()
             _, err2 := f.WriteString(in_dat)
             if err1 != nil || err2 != nil {
               panic(err1)
@@ -156,5 +156,5 @@ func startWebserver(port int, mainfolder string, filerr map[string]string,
   })
 
   fmt.Println("Starting server on port", port)
-  log.Fatal(http.ListenAndServe(":" + strconv.Itoa(port), nil))
+  log.Fatal(http.ListenAndServe(":" + port, nil))
 }

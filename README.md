@@ -31,6 +31,17 @@ Inside of each block, there are multiple statements to customize how
 your server will run. Every block needs at least one `main` folder.
 All of the following commands need to be executed in a block.
 
+## `> onport` port
+Determines what port your server is running on. It must be entered before any
+other commands because it opens a block of code. It is typed outside of a block
+
+## `> save` filename
+Opens a block of code that is saved. It can later be ran by recalling it using
+the `load` command. Code is saved in a format of how it was typed.
+
+## `> load` filename
+Opens and loads a file that was saved.
+
 ## `main`
 The `main` folder declares which folder the web server runs from.
 To set up the `main` folder, just type `main /path/to/folder`. This
@@ -58,7 +69,6 @@ The following will take all requests to main.html and reroute them to index.html
 ```
 filerr main.html->index.html
 ```
-
 
 ## `logip`
 The `logip` command will log IP's of users who request files that
