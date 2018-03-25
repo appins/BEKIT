@@ -9,6 +9,8 @@ Let's get started! Just open a terminal and type:
   git clone https://github.com/AppIns/BEKIT.git
   cd bekit/src
   go build -o ../bin/bekit && ../bin/bekit
+  # Or, to run as root, which is required for all ports under 1024
+  go build -o ../bin/bekit && sudo ../bin/bekit
 ```
 
  The BEKIT CLI should now be running.
@@ -52,7 +54,7 @@ folder must contain a file called index.html, even if you don't plan
 on using it.
 
 The bare minimum for a BEKIT server is a port and a main folder,
-a server like that would look something like
+a server like that would look something like:
 ```
 onport 80
 main /path/to/folder
