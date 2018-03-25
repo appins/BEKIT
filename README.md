@@ -6,7 +6,7 @@
 ### Getting Started
 Let's get started! Just open a terminal and type:
 ```sh
-  git clone ...
+  git clone https://github.com/AppIns/BEKIT.git
   cd bekit/src
   go build -o ../bin/bekit && ../bin/bekit
 ```
