@@ -31,9 +31,12 @@ Inside of each block, there are multiple statements to customize how
 your server will run. Every block needs at least one `main` folder.
 All of the following commands need to be executed in a block.
 
+# Block opening commands:
+These commands must be typed before any others, they open a block of BEKIT code.
+
 ## `> onport` port
-Determines what port your server is running on. It must be entered before any
-other commands because it opens a block of code. It is typed outside of a block
+Determines what port your server is running on. Stats it right afterwards. This is
+the cli method of using BEKIT
 
 ## `> save` filename
 Opens a block of code that is saved. It can later be ran by recalling it using
