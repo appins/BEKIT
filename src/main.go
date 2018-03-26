@@ -52,11 +52,33 @@ func main() {
           continue
         }
         if typ == "save" {
-          filename = dat
+          filename = dat + ".beks"
           if !fileOrFolderExists(filename) {
             _, err := os.Create(filename)
             if err != nil {
               panic(err)
+            }
+          } else {
+            var ow bool
+            fmt.Println("File already exists...")
+            for {
+              fmt.Print("Overwrite? [y/n] ")
+              overwrite, err :=  readInput()
+              if err != nil {
+                panic(err)
+              }
+              if overwrite == "y" || overwrite == "Y" || overwrite == "yes" {
+                ow = true
+                break
+              }
+              if overwrite == "n" || overwrite == "N" || overwrite == "no" {
+                ow = false
+                break
+              }
+            }
+            if ow == false {
+              inblock = false
+              continue
             }
           }
           var emptyarr []string
@@ -75,7 +97,7 @@ func main() {
         }
         if typ == "load" {
           inblock = false
-          loadFile(dat)
+          loadFile(dat + ".beks")
         }
 
       }
