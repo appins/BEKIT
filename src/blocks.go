@@ -24,17 +24,11 @@ func startBlock(args []string) (string, bool, string) {
     }
     return "onport", true, args[1]
   }
-  if args[0] == "save" {
+  if args[0] == "save" || args[0] == "load" {
     if len(args[1]) > 0 {
-      return "save", true, args[1]
+      return args[0], true, args[1]
     }
-    fmt.Println("Save requires a valid filename")
-  }
-  if args[0] == "load" {
-    if len(args[1]) > 0 {
-      return "load", true, args[1]
-    }
-    fmt.Println("Load requires a valid filename")
+    fmt.Println("'" + args[0] + "' requires a valid filename")
   }
 
   return "", false, "err"
