@@ -120,6 +120,9 @@ f text: ->console:nonewline
 f request:ip->console
 ```
 
+## `#` and `//` comments
+If a line starts with `# ` or `// `, the line will be ignored.
+There must be a space after the `#` or `//`.
 
 Commands will continue to be added until the release stage. The current
 stage is: `alpha`.

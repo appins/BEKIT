@@ -35,6 +35,8 @@ func run(block []string, port string, mode string, filename string) {
     switch args[0] {
     case "":
     case " ":
+    case "//":
+    case "#":
 
     // Set up the main, or root, folder for the project (must exist)
     case "set-main":
