@@ -44,6 +44,9 @@ the cli method of using BEKIT
 Opens a block of code that is saved. It can later be ran by recalling it using
 the `load` command. Code is saved in a format of how it was typed.
 
+If the file does not contain a '.' then it will automatically be set up with the
+extension .beks (backend kit save). This also applies to loading files.
+
 ## `> load` filename
 Opens and loads a file that was saved.
 

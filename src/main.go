@@ -40,10 +40,13 @@ func main() {
       return
     }
 
+    // If the user is not in a block, check if they used one of the commmands
+    // defined in blocks.go
     if inblock == false {
       typ, blockstart, dat := startBlock(args)
       if blockstart == true {
         inblock = true
+        // Handle the onport block command
         if typ == "onport" {
           ports = append(ports, dat)
           var emptyarr []string
@@ -51,8 +54,15 @@ func main() {
           mode = "onport"
           continue
         }
+        // Handle the save block command
         if typ == "save" {
-          filename = dat + ".beks"
+          // Insert a .beks if the file path does not contain a dot
+          if strings.Contains(dat, ".") {
+            filename = dat
+          } else {
+            filename = dat + ".beks"
+          }
+
           if !fileOrFolderExists(filename) {
             _, err := os.Create(filename)
             if err != nil {
@@ -86,7 +96,7 @@ func main() {
           var port string
           for {
             fmt.Print("Port number: ")
-            port, _ := readInput()
+            port, _ = readInput()
             _, err := strconv.Atoi(port)
             if err == nil {
               break
@@ -94,10 +104,19 @@ func main() {
           }
           ports = append(ports, port)
           mode = "save"
+
         }
+        // Handle the load block command
         if typ == "load" {
           inblock = false
+          // Load the file name if it contains a dot and load the name ending in
+          // beks if it does not.
+          if strings.Contains(dat, ".") {
+            loadFile(dat)
+            continue
+          }
           loadFile(dat + ".beks")
+
         }
 
       }
