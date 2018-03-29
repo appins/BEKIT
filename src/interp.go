@@ -50,7 +50,7 @@ func run(block []string, port string, mode string, filename string) {
         break
       }
 
-      argument := strings.Join(args[1:len(args)], " ")
+      argument := wholeArgument(comm)
 
       // Make sure file exists (and contains index.html)
       if !fileOrFolderExists(argument) {
@@ -81,7 +81,7 @@ func run(block []string, port string, mode string, filename string) {
         break
       }
 
-      argument := strings.Join(args[1:len(args)], " ")
+      argument := wholeArgument(comm)
       files := strings.Split(argument, "->")
 
       if len(files) != 2 {
@@ -107,7 +107,7 @@ func run(block []string, port string, mode string, filename string) {
       ignoreFakes = true
       fmt.Println("Ignoring commands that do not exist")
     case "f":
-      argument := strings.Join(args[1:len(args)], " ")
+      argument := wholeArgument(comm)
       pieces := strings.Split(argument, "->")
 
       if len(pieces) != 2 {

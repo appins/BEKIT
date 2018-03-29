@@ -36,7 +36,7 @@ func errReport(err string, line int) {
   fmt.Println("Error on line " + strconv.Itoa(line + 1) + ": " + err)
 }
 
-// Seperate a string by words and remove every empty entry
+// Seperate a string by words and remove every empty entry (whitespace remover)
 func cleanSplit(line string) []string {
   var cleanWords []string
   regular := strings.Split(line, " ")
@@ -45,6 +45,30 @@ func cleanSplit(line string) []string {
       cleanWords = append(cleanWords, cont)
     }
   }
-
+  
   return cleanWords
+}
+
+// When we do a clean split, we should be able to still extract the whole arg,
+// expecially when several spaces may make a big difference in formatting
+func wholeArgument(line string) string {
+  var arg string
+  reachedComm := false
+  regSplit := strings.Split(line, " ")
+  // Look for first reconized keyword (first object in clean array) and then
+  // look for where the argument starts and gather the whole argument, including
+  // spaces. You can test this with f text:  t->console and confirm they are
+  // two spaces before the t
+  for i, cont := range(regSplit) {
+    if reachedComm == false && cont != "" {
+      reachedComm = true
+      continue
+    }
+    // If the first command has already occured and the second has started
+    if reachedComm && cont != "" {
+      arg = strings.Join(regSplit[i:len(regSplit)], " ")
+      break
+    }
+  }
+  return arg
 }
