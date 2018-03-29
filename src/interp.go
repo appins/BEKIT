@@ -21,11 +21,15 @@ func run(block []string, port string, mode string, filename string) {
   ignoreErrors := false
 
   for line, comm := range(block) {
-    args := strings.Split(comm, " ")
+    args := cleanSplit(comm)
 
     // Loading from a file shifts all data down
     if mode == "load" {
       line++
+    }
+
+    if len(args) == 0 {
+      continue
     }
 
     switch args[0] {
@@ -165,9 +169,14 @@ func loadFile(filename string) {
 
   block := strings.Split(string(dat), "\n")
   // Check if the port is still valid
-  port := strings.Split(block[0], " ")
+  port := cleanSplit(block[0])
+  if len(port) != 2 || port[0] != "port" {
+    fmt.Println("Loaded file's port config is incorrect!")
+    return
+  }
+
   _, err = strconv.Atoi(port[1])
-  if err != nil || port[0] != "port" || len(port) > 2 {
+  if err != nil {
     fmt.Println("Loaded file's port config is incorrect!")
     return
   }

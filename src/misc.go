@@ -5,6 +5,7 @@ import (
   "fmt"
   "os"
   "strconv"
+  "strings"
 )
 
 func version() string {
@@ -33,4 +34,17 @@ func fileOrFolderExists(filename string) bool {
 // Report an error on a certain line
 func errReport(err string, line int) {
   fmt.Println("Error on line " + strconv.Itoa(line + 1) + ": " + err)
+}
+
+// Seperate a string by words and remove every empty entry
+func cleanSplit(line string) []string {
+  var cleanWords []string
+  regular := strings.Split(line, " ")
+  for _, cont := range(regular) {
+    if cont != "" {
+      cleanWords = append(cleanWords, cont)
+    }
+  }
+
+  return cleanWords
 }
