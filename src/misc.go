@@ -39,13 +39,15 @@ func errReport(err string, line int) {
 // Seperate a string by words and remove every empty entry (whitespace remover)
 func cleanSplit(line string) []string {
   var cleanWords []string
-  regular := strings.Split(line, " ")
-  for _, cont := range(regular) {
+  // Replace tabs with spaces
+  noTabs := strings.Replace(line, "\t", " ", -1)
+  regSplit := strings.Split(noTabs, " ")
+  for _, cont := range(regSplit) {
     if cont != "" {
       cleanWords = append(cleanWords, cont)
     }
   }
-  
+
   return cleanWords
 }
 
@@ -54,7 +56,9 @@ func cleanSplit(line string) []string {
 func wholeArgument(line string) string {
   var arg string
   reachedComm := false
-  regSplit := strings.Split(line, " ")
+  // Replace tabs with spaces
+  noTabs := strings.Replace(line, "\t", " ", -1)
+  regSplit := strings.Split(noTabs, " ")
   // Look for first reconized keyword (first object in clean array) and then
   // look for where the argument starts and gather the whole argument, including
   // spaces. You can test this with f text:  t->console and confirm they are

@@ -35,10 +35,11 @@ func run(block []string, port string, mode string, filename string) {
     switch args[0] {
     case "":
     case " ":
+    // Handle comments
     case "//":
     case "#":
 
-    // Set up the main, or root, folder for the project (must exist)
+    // Set up the root folder for the project (must contain index.html)
     case "set-main":
       fallthrough
     case "main":
@@ -52,6 +53,7 @@ func run(block []string, port string, mode string, filename string) {
         break
       }
 
+      // Refer to misc.go
       argument := wholeArgument(comm)
 
       // Make sure file exists (and contains index.html)
