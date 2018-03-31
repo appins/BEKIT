@@ -37,11 +37,7 @@ func run(block []string, port string, mode string, filename string) {
 		case "//", "#":
 
 		// Set up the root folder for the project (must contain index.html)
-		case "set-main":
-			fallthrough
-		case "main":
-			fallthrough
-		case "root":
+		case "main", "root", "set-main":
 			if len(args) == 1 {
 				errReport("main folder was not stated.", line)
 				if !ignoreErrors {
@@ -70,10 +66,7 @@ func run(block []string, port string, mode string, filename string) {
 			}
 
 			mainFolder = argument
-			break
-		case "filerr":
-			fallthrough
-		case "rrfile":
+		case "filerr", "rrfile":
 			if len(args) == 1 {
 				errReport("filerr needs an argument.", line)
 				if !ignoreErrors {
@@ -94,12 +87,8 @@ func run(block []string, port string, mode string, filename string) {
 			}
 
 			filerr[files[0]] = files[1]
-			break
-		case "log-ip":
-			fallthrough
-		case "logip":
+		case "logip", "log-ip":
 			reportIp = true
-			break
 		case "force":
 			ignoreErrors = true
 			ignoreFakes = true
